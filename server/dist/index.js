@@ -1,0 +1,3 @@
+"use strict";var _graphqlYoga=require("graphql-yoga");var _nodeHttp=require("node:http");var _data=_interopRequireDefault(require("./data.js"));var _resolvers=_interopRequireDefault(require("./graphql/resolvers"));var _typeDefs=_interopRequireDefault(require("./graphql/type-defs"));function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{"default":obj}}//
+//
+var pubSub=(0,_graphqlYoga.createPubSub)();var yoga=(0,_graphqlYoga.createYoga)({schema:(0,_graphqlYoga.createSchema)({typeDefs:_typeDefs["default"],resolvers:_resolvers["default"]}),context:{pubSub:pubSub,db:_data["default"]}});var server=(0,_nodeHttp.createServer)(yoga);server.listen(4000,function(){console.info("Server is running on http://localhost:4000/graphql")});

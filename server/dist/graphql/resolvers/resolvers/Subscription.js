@@ -1,0 +1,11 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:true});exports.Subscription=void 0;var _graphqlYoga=require("graphql-yoga");var Subscription={// User
+userCreated:{subscribe:function subscribe(_,__,_ref){var pubSub=_ref.pubSub;return pubSub.subscribe("userCreated")}},userUpdated:{subscribe:function subscribe(_,__,_ref2){var pubSub=_ref2.pubSub;return pubSub.subscribe("userUpdated")}},userDeleted:{subscribe:function subscribe(_,__,_ref3){var pubSub=_ref3.pubSub;return pubSub.subscribe("userDeleted")}},// Post
+postCreated:{subscribe:function subscribe(_,args,_ref4){var pubSub=_ref4.pubSub;return(0,_graphqlYoga.pipe)(// pipe 2 parametre alır.
+pubSub.subscribe("postCreated"),// 1. parametre yayına abone olmak için kullanılan fonksiyon.
+(0,_graphqlYoga.filter)(function(value// 2 parametre filter. içi true dönerse değeri yakalar. yoksa es geçer.
+){return args.user_id// args.user_id varsa
+?value.postCreated.user_id===args.user_id// bu kıyaslama yapılır.
+:true}// args.user_id yoksa parametre geçilmemiştir. true döner.
+))}},postUpdated:{subscribe:function subscribe(_,__,_ref5){var pubSub=_ref5.pubSub;return pubSub.subscribe("postUpdated")}},postDeleted:{subscribe:function subscribe(_,__,_ref6){var pubSub=_ref6.pubSub;return pubSub.subscribe("postDeleted")}},postsCount:{subscribe:function subscribe(_,__,_ref7){var pubSub=_ref7.pubSub,db=_ref7.db;setTimeout(function(){pubSub.publish("postsCount",{postsCount:db.posts.length})});return pubSub.subscribe("postsCount")}},// Comment
+commentCreated:{subscribe:function subscribe(_,args,_ref8){var pubSub=_ref8.pubSub;return(0,_graphqlYoga.pipe)(// Yukarıdaki örneğin tekrarı.
+pubSub.subscribe("commentCreated"),(0,_graphqlYoga.filter)(function(value){return args.post_id?value.commentCreated.post_id===args.post_id:true}))}},commentUpdated:{subscribe:function subscribe(_,__,_ref9){var pubSub=_ref9.pubSub;return pubSub.subscribe("commentUpdated")}},commentDeleted:{subscribe:function subscribe(_,__,_ref10){var pubSub=_ref10.pubSub;return pubSub.subscribe("commentDeleted")}}};exports.Subscription=Subscription;
